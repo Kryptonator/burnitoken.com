@@ -1,0 +1,97 @@
+Anleitung: Burni Token Webseite live schalten
+Dieser Leitfaden führt Sie durch den Prozess, Ihre Webseite mit GitHub Pages kostenlos zu hosten und Ihre eigene Domain (burnitoken.com) zu verbinden.
+
+Phase 1: Finale Vorbereitungen (Ihre Aufgaben)
+Bevor Sie live gehen, sollten die folgenden Punkte abgeschlossen sein, um sicherzustellen, dass die Seite korrekt aussieht:
+
+Schritt 1: Assets bereitstellen
+
+Erstellen Sie auf Ihrem Computer einen Ordner für Ihr Projekt (z.B. burni-website).
+
+Legen Sie die index.html-Datei (burni_token_website_v2) und die main.js-Datei (burni_token_main_js) in diesen Ordner.
+
+Erstellen Sie einen Unterordner namens assets.
+
+Legen Sie alle Bilder, das Video (token-burn.mp4), Ihr Logo und das Favicon in den assets-Ordner. Stellen Sie sicher, dass die Dateinamen genau mit denen im HTML-Code übereinstimmen (z.B. Burni.jpg, use-case-rewards.jpg, favicon.ico etc.).
+
+Schritt 2: CSS-Datei generieren
+
+Folgen Sie dem Plan aus dem "Technischen Leitfaden", um den CSS-Build-Prozess einzurichten.
+
+Führen Sie den Befehl npm run build:css aus.
+
+Dadurch wird die Datei assets/styles.min.css erstellt. Stellen Sie sicher, dass diese auch im assets-Ordner liegt.
+
+Phase 2: GitHub Repository einrichten
+Schritt 3: Neues Repository erstellen
+
+Gehen Sie zu GitHub und loggen Sie sich ein.
+
+Erstellen Sie ein neues, öffentliches Repository. Ein guter Name wäre burnitoken.com oder burni-website.
+
+Schritt 4: Projektdateien hochladen
+
+Laden Sie alle Dateien und Ordner aus Ihrem Projektordner (index.html, main.js und der gesamte assets-Ordner) in Ihr neues GitHub-Repository hoch.
+
+Phase 3: GitHub Pages aktivieren
+Schritt 5: GitHub Pages einrichten
+
+Gehen Sie in Ihrem GitHub-Repository zum Tab "Settings".
+
+Klicken Sie im linken Menü auf "Pages".
+
+Unter "Source", wählen Sie den Branch aus, den Sie veröffentlichen möchten (normalerweise main oder master).
+
+Wählen Sie den Ordner / (root) aus.
+
+Klicken Sie auf "Save".
+
+Nach kurzer Zeit ist Ihre Webseite unter einer URL wie https://IHR_BENUTZERNAME.github.io/IHR_REPOSITORYNAME/ erreichbar.
+
+Phase 4: Eigene Domain (burnitoken.com) verbinden
+Schritt 6: Domain in GitHub eintragen
+
+Gehen Sie wieder zu Settings > Pages.
+
+Im Abschnitt "Custom domain", geben Sie Ihre Domain ein: www.burnitoken.com
+
+Klicken Sie auf "Save". GitHub gibt Ihnen nun die DNS-Einträge, die Sie bei Ihrem Domain-Anbieter konfigurieren müssen. Normalerweise sind das vier A-Einträge und ein CNAME-Eintrag.
+
+Schritt 7: DNS-Einträge bei Ihrem Domain-Anbieter konfigurieren
+
+Loggen Sie sich bei Ihrem Domain-Anbieter ein (GoDaddy, Namecheap, etc.).
+
+Gehen Sie zu den DNS-Einstellungen für burnitoken.com.
+
+Erstellen Sie vier A-Einträge, die auf die IP-Adressen von GitHub Pages verweisen:
+
+Typ: A, Host/Name: @, Wert: 185.199.108.153
+
+Typ: A, Host/Name: @, Wert: 185.199.109.153
+
+Typ: A, Host/Name: @, Wert: 185.199.110.153
+
+Typ: A, Host/Name: @, Wert: 185.199.111.153
+
+Erstellen Sie einen CNAME-Eintrag, damit www.burnitoken.com auch funktioniert:
+
+Typ: CNAME, Host/Name: www, Wert: IHR_BENUTZERNAME.github.io
+
+Schritt 8: Warten und HTTPS aktivieren
+
+Es kann einige Stunden dauern, bis die DNS-Änderungen weltweit übernommen werden.
+
+Sobald die DNS-Konfiguration abgeschlossen ist, gehen Sie zurück zu Settings > Pages in GitHub.
+
+Aktivieren Sie die Option "Enforce HTTPS". GitHub wird automatisch ein SSL-Zertifikat für Ihre Domain ausstellen.
+
+Phase 5: Wichtiger Hinweis zu dynamischen Funktionen
+GitHub Pages ist ein statischer Host. Das bedeutet:
+
+Content Security Policy (CSP) mit Nonce: Die {{NONCE}}-Platzhalter werden nicht funktionieren. Der Server von GitHub Pages kann keinen einzigartigen Nonce für jede Anfrage generieren. Für den Start ist das in Ordnung, aber für maximale Sicherheit müssten Sie später auf einen dynamischen Host umsteigen.
+
+API-Anfragen (fetchLivePrices): Die API-Anfragen aus dem JavaScript an xrpscan.com oder coingecko.com werden funktionieren, da sie vom Browser des Besuchers (Client-seitig) ausgeführt werden. Ihre aktuelle connect-src-CSP erlaubt dies bereits.
+
+Für die volle Funktionalität mit Nonce-Sicherheit benötigen Sie später einen Host, der serverseitigen Code ausführen kann (z.B. Vercel, Netlify, Heroku oder ein klassischer Webserver).
+
+Zusammenfassung: Sie können jetzt mit Phase 1 beginnen, Ihre Assets sammeln und dann die Schritte 2-4 durchführen, um eine erste, voll funktionsfähige Version Ihrer Webseite unter Ihrer eigenen Domain live zu schalten!
