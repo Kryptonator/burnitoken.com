@@ -39,7 +39,7 @@
         default-src 'self';
         img-src 'self' data:; 
         script-src 'self' https://cdn.jsdelivr.net https://platform.twitter.com 'nonce-{{NONCE}}'; 
-        style-src 'self' https://cdnjs.cloudflare.com 'nonce-{{NONCE}}'; 
+        style-src 'self' https://cdnjs.cloudflare.com; 
         font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
         connect-src 'self' https://api.xrpl.org/v2 https://bithomp.com https://xrpscan.com https://api.coingecko.com https://data.ripple.com; 
         frame-src 'self' https://platform.twitter.com;
@@ -92,7 +92,7 @@
                         <option value="bn"><span aria-hidden="true">🇧🇩</span> বাংলা</option> 
                         <option value="ja"><span aria-hidden="true">🇯🇵</span> 日本語</option> 
                         <option value="pt"><span aria-hidden="true">🇵🇹</span> Português</option>
-                        <option value="ko"><span aria-hidden="true"> 🇷</span> 한국어</option>
+                        <option value="ko"><span aria-hidden="true">🇰🇷</span> 한국어</option>
                         <option value="ru"><span aria-hidden="true">🇷🇺</span> Русский</option>
                         <option value="tr"><span aria-hidden="true">🇹🇷</span> Türkçe</option>
                         <option value="zh"><span aria-hidden="true">🇨🇳</span> 中文</option>
@@ -312,8 +312,6 @@
 // main.js: Core functionality for Burni Token website
 document.addEventListener('DOMContentLoaded', () => {
     // ... (Kompletter JavaScript-Code, wie in der vorherigen Nachricht bereitgestellt) ...
-    // ... (einschließlich des vollständigen `translations`-Objekts für alle 13 Sprachen und der neuen `alt_...`, `..._aria_label`, `date`, `day`, `process_no`, `remaining_coins` Schlüssel) ...
-    // ... (einschließlich der Funktionen generateSchedule, renderScheduleTable, fetchBurniMetrics, fetchXPMMetrics, fetchLivePrices, setLanguage etc.) ...
 });
 ```
 
@@ -331,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
   "devDependencies": {
     "autoprefixer": "^10.4.19",
     "cssnano": "^7.0.1",
+    "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
     "tailwindcss": "^3.4.3"
   }
@@ -338,9 +337,17 @@ document.addEventListener('DOMContentLoaded', () => {
 ```javascript
 // tailwind.config.js
 module.exports = {
-  content: ['./*.html', './src/**/*.{html,js}'],
+  content: [
+    './*.html',
+    './assets/**/*.js',
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'],
+        'baloo-2': ['"Baloo 2"', 'cursive'],
+      },
+    },
   },
   plugins: [],
 };
@@ -358,4 +365,47 @@ module.exports = {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+/* Hier können Sie benutzerdefinierte CSS-Klassen hinzufügen, falls benötigt. */
+.pixar-button {
+    @apply bg-orange-500 text-white font-bold py-2 px-4 rounded-full shadow-lg transform transition-all duration-300;
+}
+.pixar-button:hover {
+    @apply bg-orange-600 scale-105;
+}
+
+.nav-link {
+    @apply text-gray-600 hover:text-orange-600 font-semibold px-3 py-2 rounded-md text-sm transition-colors duration-300;
+}
+.nav-link.active {
+    @apply text-orange-600;
+}
+
+.section-card {
+    @apply bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300;
+}
+.kpi-card {
+    @apply bg-white p-4 rounded-xl shadow-md text-center;
+}
+.kpi-value {
+    @apply text-3xl font-bold text-orange-600;
+}
+.kpi-label {
+    @apply text-sm text-gray-500 mt-1;
+}
+.tooltip {
+  @apply relative inline-block;
+}
+.tooltip .tooltiptext {
+  @apply invisible w-48 bg-gray-800 text-white text-center rounded-md py-2 px-3 absolute z-10 bottom-full left-1/2 -ml-24 opacity-0 transition-opacity duration-300;
+}
+.tooltip:hover .tooltiptext {
+  @apply visible opacity-100;
+}
+.burni-mascot {
+    @apply w-40 h-40 md:w-52 md:h-52 object-contain;
+}
+.chart-container {
+    height: 300px; /* Feste Höhe für die Diagramm-Container */
+    width: 100%;
+}

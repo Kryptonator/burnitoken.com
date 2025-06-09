@@ -1,9 +1,8 @@
-tailwind.config.js
-
 module.exports = {
   content: [
     './*.html',
-    './assets/**/*.js',
+    './assets/main.js',
+    './src/**/*.css'
   ],
   theme: {
     extend: {
@@ -15,4 +14,3 @@ module.exports = {
   },
   plugins: [],
 };
-```javascript
