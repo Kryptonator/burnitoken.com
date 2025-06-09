@@ -1,7 +1,7 @@
 module.exports = {
   content: [
-    './*.html',
-    './assets/main.js',
+    './index.html',
+    './main.js',
     './src/**/*.css'
   ],
   theme: {
@@ -14,3 +14,6 @@ module.exports = {
   },
   plugins: [],
 };
+// Configures Tailwind CSS: specifies content files, extends the theme, and adds plugins.
+
+// "build:css": "postcss src/styles.css -o assets/styles.min.css --env production"
