@@ -1,0 +1,5 @@
+# Anweisungen für alle Suchmaschinen-Bots
+User-agent: *
+Allow: /
+Sitemap: https://www.burnitoken.website/sitemap.xml
+Disallow: /assets/private/

@@ -1,9 +1,5 @@
 module.exports = {
-  content: [
-    './index.html',
-    './main.js',
-    './src/**/*.css'
-  ],
+  content: ['./**/*.html'],
   theme: {
     extend: {
       fontFamily: {
@@ -13,7 +9,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
-// Configures Tailwind CSS: specifies content files, extends the theme, and adds plugins.
-
-// "build:css": "postcss src/styles.css -o assets/styles.min.css --env production"
+}
