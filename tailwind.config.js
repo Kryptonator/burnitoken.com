@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'inter': ['Inter', 'sans-serif'],
         'baloo-2': ['"Baloo 2"', 'cursive'],
+        'inter': ['Inter', 'sans-serif'],
       },
     },
   },
