@@ -2,29 +2,28 @@
   "name": "burni-website",
   "version": "1.0.0",
   "scripts": {
-    "dev:css": "tailwindcss -i ./src/styles.css -o ./assets/css/styles.min.css --watch",
-    "build:css": "cross-env NODE_ENV=production tailwindcss -i ./src/styles.css -o ./assets/css/styles.min.css --minify",
-    "prebuild": "npx update-browserslist-db@latest",
-    "build": "npm run build:css",
-    "postbuild": "echo Build completed successfully!"
+    "dev": "cross-env NODE_ENV=development tailwindcss -i ./src/css/styles.css -o ./assets/css/styles.min.css --watch",
+    "build:css": "cross-env NODE_ENV=production tailwindcss -i ./src/css/styles.css -o ./assets/css/styles.min.css --minify",
+    "serve": "http-server . -p 8080 --config http-server.config.json",
+    "build": "npm run build:css && echo Build erfolgreich abgeschlossen!",
+    "start": "npm run build && npm run serve",
+    "clean": "del-cli assets/css/*.min.css",
+    "lint": "prettier --write \"**/*.{html,css,js}\" --ignore-path .gitignore",
+    "lint:check": "prettier --check \"**/*.{html,css,js}\" --ignore-path .gitignore",
+    "test": "echo \"Keine Tests definiert\"",
+    "validate": "html-validate index.html 404.html",
+    "optimize": "npm run clean && npm run build && npm run lint"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
-    "browserslist": "^4.25.0",
     "cross-env": "^7.0.3",
+    "cssnano": "^7.0.7",
+    "del-cli": "^6.0.0",
+    "html-validate": "^9.5.5",
+    "http-server": "^14.1.1",
     "postcss": "^8.5.4",
+    "prettier": "^3.2.0",
+    "rimraf": "^5.0.1",
     "tailwindcss": "^3.4.17"
-  },
-  "homepage": "https://burnitoken.com/",
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
-  ],
-  "files": [
-    "src/",
-    "assets/css/styles.min.css",
-    "package.json",
-    "tailwind.config.js"
-  ]
+  }
 }

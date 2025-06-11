@@ -1,0 +1,27 @@
+{
+  "root": ".",
+  "port": 8080,
+  "cors": true,
+  "cache": 3600,
+  "gzip": true,
+  "brotli": true,
+  "showDir": false,
+  "autoIndex": false,
+  "ext": "html",
+  "proxy": false,
+  "mimeTypes": {
+    "woff2": "font/woff2",
+    "webp": "image/webp",
+    "mp4": "video/mp4",
+    "vtt": "text/vtt"
+  },
+  "headers": {
+    "Cache-Control": "public, max-age=3600",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "X-XSS-Protection": "1; mode=block",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "geolocation=(), camera=(), microphone=()",
+    "Access-Control-Allow-Origin": "*"
+  }
+}

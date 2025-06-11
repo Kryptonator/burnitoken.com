@@ -1,5 +1,21 @@
-# Anweisungen für alle Suchmaschinen-Bots
+# Burni Token Website Robots Configuration
+# https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
 Allow: /
-Sitemap: https://www.burnitoken.website/sitemap.xml
 Disallow: /assets/private/
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /public/
+Disallow: /.vscode/
+
+# Crawler Einstellungen
+Crawl-delay: 10
+
+# Sitemap
+Sitemap: https://burnitoken.com/sitemap.xml
+
+# Bevorzugte Domain
+Host: burnitoken.com
