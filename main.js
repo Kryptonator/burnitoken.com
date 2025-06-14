@@ -532,6 +532,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 1500);
 
+  // Mock-Daten für Live-Preise und AMM-Pool
+  const mockData = {
+    burni: { day: [0.0011, 0.0012, 0.0010], week: [0.0011, 0.0013, 0.0010, 0.0012], month: [0.0011, 0.0014, 0.0010, 0.0013, 0.0012] },
+    xrp: { day: [0.50, 0.51, 0.49], week: [0.50, 0.52, 0.48, 0.51], month: [0.50, 0.53, 0.47, 0.52, 0.51] },
+    xpm: { day: [0.02, 0.021, 0.019], week: [0.02, 0.022, 0.019, 0.021], month: [0.02, 0.023, 0.018, 0.022, 0.021] },
+    ammPool: { day: [1000, 1010, 990], week: [1000, 1020, 980, 1010], month: [1000, 1030, 970, 1020, 1010] }
+  };
+  let priceChartInstance;
+  // Funktion zum Aktualisieren des Charts
+  function updatePriceChart(interval) {
+    if (priceChartInstance) priceChartInstance.destroy();
+    const ctx = document.getElementById('priceChart').getContext('2d');
+    priceChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: interval === 'day' ? ['00:00', '12:00', '23:59'] : interval === 'week' ? ['Mo', 'Di', 'Mi', 'Do'] : ['W1', 'W2', 'W3', 'W4', 'W5'],
+        datasets: [
+          { label: 'Burni Coin', data: mockData.burni[interval], borderColor: '#F97316', fill: false },
+          { label: 'XRP', data: mockData.xrp[interval], borderColor: '#10B981', fill: false },
+          { label: 'XPM', data: mockData.xpm[interval], borderColor: '#3B82F6', fill: false },
+          { label: 'AMM Pool Volumen', data: mockData.ammPool[interval], borderColor: '#8B5CF6', fill: false }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: false, title: { display: true, text: 'Preis ($)' } },
+          x: { title: { display: true, text: 'Zeit' } }
+        }
+      }
+    });
+  }
+  // Event-Listener für Intervall-Buttons
+  document.getElementById('interval-day').addEventListener('click', () => updatePriceChart('day'));
+  document.getElementById('interval-week').addEventListener('click', () => updatePriceChart('week'));
+  document.getElementById('interval-month').addEventListener('click', () => updatePriceChart('month'));
+  // Initiales Laden
+  updatePriceChart('day');
+  // Simulierte Preisaktualisierung KPI
+  setInterval(() => {
+    document.getElementById('burniPrice').textContent = `$${(Math.random() * 0.0005 + 0.001).toFixed(4)}`;
+    document.getElementById('xrpPrice').textContent = `$${(Math.random() * 0.05 + 0.50).toFixed(2)}`;
+    document.getElementById('xpmPrice').textContent = `$${(Math.random() * 0.005 + 0.02).toFixed(3)}`;
+  }, 10000);
+
   const translations = {
     en: {
       page_title: 'Burni Token - Innovative Decentralized Cryptocurrency',
@@ -666,8 +711,10 @@ document.addEventListener('DOMContentLoaded', () => {
       faq_q5: 'What is the XRP Ledger?',
       faq_a5: 'The XRP Ledger is a fast and efficient blockchain.',
       community_title: 'Join Our Community',
-      community_description: 'Be part of the Burni Coin community.',
-      footer_copyright: '© Burni Token 2025. All rights reserved.',
+      community_description: 'Become part of the Burni community on X, Telegram, and Discord!',
+      community_x: 'Follow us on X',
+      community_telegram: 'Join Telegram',
+      community_discord: 'Join Discord',
     },
     de: {
       page_title: 'Burni Token - Innovative dezentrale Kryptowährung',
@@ -804,9 +851,11 @@ document.addEventListener('DOMContentLoaded', () => {
       faq_a4: 'Sie können Burni Coin auf verschiedenen Plattformen handeln.',
       faq_q5: 'Was ist der XRP Ledger?',
       faq_a5: 'Der XRP Ledger ist eine schnelle und effiziente Blockchain.',
-      community_title: 'Treten Sie unserer Gemeinschaft bei',
-      community_description: 'Seien Sie Teil der Burni Coin-Gemeinschaft.',
-      footer_copyright: '© Burni Token 2025. Alle Rechte vorbehalten.',
+      community_title: 'Tritt unserer Community bei',
+      community_description: 'Werde Teil der Burni-Community auf X, Telegram und Discord!',
+      community_x: 'Folge uns auf X',
+      community_telegram: 'Tritt Telegram bei',
+      community_discord: 'Tritt Discord bei',
     },
     es: {
       page_title: 'Burni Token - Criptomoneda descentralizada innovadora',
@@ -944,8 +993,10 @@ document.addEventListener('DOMContentLoaded', () => {
       faq_q5: '¿Qué es el XRP Ledger?',
       faq_a5: 'El XRP Ledger es una blockchain rápida y eficiente.',
       community_title: 'Únete a Nuestra Comunidad',
-      community_description: 'Sé parte de la comunidad de Burni Coin.',
-      footer_copyright: '© Burni Token 2025. Todos los derechos reservados.',
+      community_description: 'Sé parte de la comunidad de Burni Coin en X, Telegram y Discord!',
+      community_x: 'Síguenos en X',
+      community_telegram: 'Únete a Telegram',
+      community_discord: 'Únete a Discord',
     },
     fr: {
       page_title: 'Burni Token - Cryptomonnaie Décentralisée et Innovante',
@@ -1084,8 +1135,10 @@ document.addEventListener('DOMContentLoaded', () => {
       faq_q5: "Qu'est-ce que le XRP Ledger ?",
       faq_a5: 'Le XRP Ledger est une blockchain rapide et efficace.',
       community_title: 'Rejoignez Notre Communauté',
-      community_description: 'Faites partie de la communauté Burni Coin.',
-      footer_copyright: '© Burni Token 2025. Tous droits réservés.',
+      community_description: 'Devenez membre de la communauté Burni sur X, Telegram et Discord !',
+      community_x: 'Suivez-nous sur X',
+      community_telegram: 'Rejoindre Telegram',
+      community_discord: 'Rejoindre Discord',
     },
     ar: {
       page_title: 'رمز Burni - Cryptocurrency لامركزية مبتكرة',
@@ -1218,8 +1271,151 @@ document.addEventListener('DOMContentLoaded', () => {
       faq_q5: 'What is the XRP Ledger?',
       faq_a5: 'The XRP Ledger is a fast and efficient blockchain.',
       community_title: 'Join Our Community',
-      community_description: 'Be part of the Burni Coin community.',
-      footer_copyright: '© Burni Token 2025. All rights reserved.',
+      community_description: 'Become part of the Burni community on X, Telegram, and Discord!',
+      community_x: 'Follow us on X',
+      community_telegram: 'Join Telegram',
+      community_discord: 'Join Discord',
+    },
+    de: {
+      page_title: 'Burni Token - Innovative dezentrale Kryptowährung',
+      lang_select_label: 'Sprache auswählen',
+      nav_home: 'Startseite',
+      nav_about: 'Über Burni',
+      nav_tokenomics: 'Tokenomics',
+      nav_use_cases: 'Anwendungsfälle',
+      nav_token_schedule: 'Token-Zeitplan',
+      nav_trade: 'Token handeln',
+      nav_community: 'Gemeinschaft',
+      menu_button: 'Menü',
+      hero_title: 'Willkommen bei Burni!',
+      hero_description:
+        'Entdecken Sie den deflationären Token, der durch Knappheit Wert schafft. Begleiten Sie uns auf einer feurigen Entdeckungsreise!',
+      hero_button: 'Mehr erfahren!',
+      about_title: 'Was ist Burni?',
+      about_description:
+        'Burni ist mehr als nur ein Token. Es ist ein Versprechen für eine deflationäre Zukunft. Im Kern von Burni steht ein Mechanismus, der Token dauerhaft aus dem Umlauf entfernt, um potenziell den Wert der verbleibenden Token zu steigern.',
+      burn_title: 'Das Geheimnis des Token-Brennens',
+      burn_description:
+        'Stellen Sie sich vor, Token werden wie Holzscheite in einem magischen Feuer verbrannt. Sie verschwinden für immer! Dieser Prozess, genannt "Token-Brennen", reduziert das Gesamtangebot an Burni-Token. Weniger Token können bedeuten, dass jeder einzelne wertvoller wird, ähnlich wie bei seltenen Sammlerstücken.',
+      burn_animation_note:
+        'Diese Animation veranschaulicht, wie Token symbolisch aus dem Umlauf entfernt werden.',
+      blackholed_title: "Burnis Versprechen: 'Blackholed'",
+      blackholed_description:
+        "Burni wird als 'Blackholed: JA' gekennzeichnet. Das bedeutet, dass das maximale Angebot an Burni-Token festgelegt ist und keine neuen Token jemals erstellt werden können. Es ist, als würde man den Schlüssel zum Tresor wegwerfen!",
+      blackholed_tooltip_trigger: "Was bedeutet 'Blackholed'?",
+      blackholed_tooltip_text:
+        "Wenn ein Token-Emittent 'blackholed' ist, bedeutet das, dass die ausgebende Adresse ihre Rechte zum Minten neuer Token oder zur Änderung von Token-Eigenschaften aufgegeben hat. Dadurch wird das maximale Angebot wirklich festgelegt.",
+      use_cases_title: 'Verwendungszwecke: Wofür Burni-Münzen verwendet werden können',
+      use_cases_description:
+        'Burni-Münzen sind nicht nur ein Token, sondern ein vielseitiges digitales Asset mit wachsenden Anwendungen im XRPL-Ökosystem.',
+      use_case_gaming_title: 'Dezentralisiertes Gaming',
+      use_case_gaming_desc:
+        'Verwenden Sie Burni als In-Game-Währung oder für exklusive In-Game-Assets in zukünftigen XRPL-Spielen.',
+      use_case_nfts_title: 'NFT-Integration',
+      use_case_nfts_desc:
+        'Erwerben und handeln Sie einzigartige digitale Kunstwerke und Sammlerstücke auf NFT-Marktplätzen mit Burni.',
+      use_case_rewards_title: 'Belohnungssysteme',
+      use_case_rewards_desc:
+        'Verdienen Sie Burni, indem Sie an Gemeinschaftsaktionen, Staking-Programmen teilnehmen oder als Belohnung für Beiträge.',
+      use_case_microtx_title: 'Mikrotransaktionen',
+      use_case_microtx_desc:
+        'Profitieren Sie von den extrem niedrigen Transaktionsgebühren des XRPL für schnelle und kostengünstige Zahlungen.',
+      use_case_governance_title: 'Gemeinschaftsregierung',
+      use_case_governance_desc:
+        'Halten Sie Burni, um an wichtigen Entscheidungen über die Zukunft des Projekts teilzunehmen und mitzubestimmen.',
+      token_schedule_title: 'Burni-Münze: Deflationärer Zeitplan',
+      token_schedule_description:
+        'Wir glauben an Transparenz und die langfristige Wertentwicklung der Burni-Münze. Ein zentrales Element unseres Ökosystems ist der einzigartige deflationäre Mechanismus, der die Gesamtmenge der im Umlauf befindlichen Burni-Münzen kontinuierlich reduziert.',
+      key_insights_title: 'Wichtige Erkenntnisse aus der Simulation',
+      key_insights_text:
+        'Basierend auf unserer Berechnung, beginnend mit 500.000 Münzen vor dem ersten Prozess, sind die Münzen effektiv verschwunden, wenn weniger als 1 Münze verbleibt. Dies wird nach 260 Prozessen der Fall sein.',
+      key_insights_start_date: 'Beginn des ersten Prozesses: 1. Juni 2025 (Sonntag)',
+      key_insights_end_date: 'Enddatum (nach 260 Prozessen, Münzen < 1): 21. Juli 2027 (Mittwoch)',
+      key_insights_total_processes: 'Gesamtprozesse: 260',
+      key_insights_total_days: 'Verstrichene Tage bis zum Ende: 780 Tage',
+      process_details_title: 'Der Prozess im Detail',
+      process_details_text1:
+        'Ab dem 1. Juni 2025 wird alle drei Tage ein zweistufiger Prozess durchgeführt.',
+      process_details_burn:
+        'Brennen: Zuerst werden 3% der derzeit zirkulierenden Münzen dauerhaft aus dem Umlauf entfernt und zerstört.',
+      process_details_lock:
+        'Sperren: Dann werden 2% der nach dem Brennen verbleibenden Münzen gesperrt.',
+      process_details_text2:
+        'Dieser Zyklus wiederholt sich alle drei Tage, bis die Anzahl der Münzen unter eine ganze Einheit fällt (weniger als 1 Münze verbleibt).',
+      schedule_timeline_title: 'Zeitplan zur Reduzierung der Münzen',
+      schedule_timeline_text:
+        'Die folgende Tabelle zeigt ein Beispiel für die verbleibenden Münzen nach Abschluss des jeweiligen Prozesses an den angegebenen Daten.',
+      schedule_disclaimer:
+        'Hinweis: Die Werte sind auf zwei Dezimalstellen gerundet. Der Prozess wird gestoppt, sobald der Wert unter 1 fällt.',
+      visual_representation_title: 'Visuelle Darstellung der Reduzierung',
+      visual_representation_text:
+        'Um die Entwicklung der Burni-Münzen besser zu veranschaulichen, haben wir ein interaktives Diagramm erstellt, das den deflationären Prozess visualisiert.',
+      visual_representation_note:
+        'Dieses Diagramm zeigt die verbleibende Münzanzahl über den Zeitverlauf, um die deflationäre Natur der Burni-Münze visuell hervorzuheben.',
+      tokenomics_title: 'Burnis Welt: Fakten und Zahlen',
+      tokenomics_description:
+        'Hier sind die wichtigsten Zahlen, die Burni definieren. Diese Daten geben Ihnen Einblick in die wirtschaftliche Grundlage und das Potenzial des Tokens.',
+      kpi_max_supply: 'Maximales Angebot',
+      kpi_circulating_supply: 'Zirkulierendes Angebot',
+      kpi_current_price: 'Aktueller Burni-Preis',
+      kpi_xrp_price: 'Aktueller XRP-Preis',
+      kpi_xpm_price: 'Aktueller XPM-Preis',
+      kpi_holders: 'Anzahl der Inhaber',
+      kpi_trustlines: 'Anzahl der Trustlines',
+      kpi_issuer_fee: 'Emittentengebühr',
+      price_error_message:
+        'Preisdaten konnten nicht geladen werden. Bitte versuchen Sie es später erneut.',
+      last_updated_label: 'Zuletzt aktualisiert:',
+      token_details_title: 'Token-Details',
+      created_on: 'Erstellt am: 17. Mai 2025',
+      ath: 'Allzeithoch',
+      ath_tooltip: 'Der höchste jemals erreichte Preis von Burni Coin.',
+      atl: 'Allzeittief',
+      atl_tooltip: 'Der niedrigste jemals erreichte Preis von Burni Coin.',
+      total_supply: 'إجمالي المعروض',
+      platform: 'Plattform: XRP Ledger (XRPL)',
+      note_data_disclaimer: 'Hinweis: Daten können sich ändern.',
+      supply_overview_title: 'Angebotsübersicht',
+      supply_chart_caption: 'Dieses Diagramm visualisiert das Token-Angebot.',
+      supply_chart_description: 'Dieses Diagramm visualisiert das Token-Angebot.',
+      xrpl_home_title: 'Zuhause im XRP Ledger',
+      xrpl_home_description:
+        'Burni läuft auf dem XRP Ledger, einer schnellen und effizienten Blockchain.',
+      xrpl_slogan: 'Schnell, effizient und sicher.',
+      trade_title: 'Handel mit Burni Coin',
+      trade_description: 'Handeln Sie Burni Coin auf verschiedenen Plattformen.',
+      token_page_link: 'Token-Seite',
+      token_page_desc: 'Alle Infos über Burni Coin.',
+      set_trustline_link: 'XPM Trustline setzen',
+      set_trustline_desc: 'Aktivieren Sie die XPM Trustline.',
+      dex_trade_link: 'XPM-Handel',
+      dex_trade_desc: 'Kaufen/Verkaufen Sie XPM an dezentralen Börsen.',
+      swap_link: 'SWAP XPM',
+      swap_desc: 'XPM einfach austauschen.',
+      market_data_title: 'Market Data (ATH/ATL Visualization)',
+      market_data_description: 'This chart shows Burni’s All-Time High (ATH) and All-Time Low (ATL) in XRP, based on corrected report data.',
+      ath_atl_chart_caption: 'ATH/ATL Chart',
+      tweets_title: 'Tweets',
+      tweets_description: 'Neueste Tweets über Burni Coin.',
+      faq_title: 'Häufig gestellte Fragen',
+      faq_description: 'Antworten auf häufige Fragen zu Burni Coin.',
+      faq_search_label_sr: 'FAQs suchen',
+      faq_search_desc_sr: 'FAQs suchen.',
+      faq_q1: 'Was ist Burni Coin?',
+      faq_a1: 'Burni Coin ist ein deflationärer Token.',
+      faq_q2: 'Wie funktioniert das Token-Brennen?',
+      faq_a2: 'Das Token-Brennen reduziert das Gesamtangebot.',
+      faq_q3: 'Was ist das maximale Angebot von Burni Coin?',
+      faq_a3: 'Das maximale Angebot beträgt 1.000.000.',
+      faq_q4: 'Wie kann ich Burni Coin handeln?',
+      faq_a4: 'Sie können Burni Coin auf verschiedenen Plattformen handeln.',
+      faq_q5: 'Was ist der XRP Ledger?',
+      faq_a5: 'Der XRP Ledger ist eine schnelle und effiziente Blockchain.',
+      community_title: 'Tritt unserer Community bei',
+      community_description: 'Werde Teil der Burni-Community على X, Telegram و Discord!',
+      community_x: 'Folge uns على X',
+      community_telegram: 'تفعيل Telegram',
+      community_discord: 'تفعيل Discord',
     },
   };
 
