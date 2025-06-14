@@ -40,26 +40,37 @@ A modern, responsive website for Burni Token - a deflationary cryptocurrency on 
 - `npm run lint` - Format code with Prettier
 - `npm run optimize` - Full optimization pipeline
 
-## 📁 Project Structure
+## 📦 Project Structure
 
-```
-burnitoken.com/
-├── assets/
-│   ├── css/styles.min.css          # Compiled Tailwind CSS
-│   ├── images/                     # Optimized images
-│   ├── scripts.js                  # Main JavaScript
-│   └── scripts.min.js              # Minified JavaScript
-├── src/css/styles.css              # Source Tailwind CSS
-├── index.html                      # Main page
-├── 404.html                        # Error page
-├── manifest.json                   # PWA manifest
-├── sw.js                           # Service Worker
-└── package.json                    # Dependencies and scripts
-```
+- `index.html` – Main entry point
+- `assets/` – Static assets (images, CSS, JS, fonts, videos)
+- `src/` – Source files (custom CSS)
+- `tests/` – Test scripts (Jest, Playwright)
+- `playwright-report/` – E2E test reports
+- `coverage/` – Code coverage reports
 
-## 🌐 Deployment
+## 🛡️ Security
 
-Optimized for deployment on static hosting platforms and traditional web servers.
+Sensitive files (z. B. API Keys, .env) sollten nicht ins Repository gelangen. Siehe `.gitignore` und `SECURITY.md` für Details.
+
+## 🧪 Testing & Reports
+
+- `npm run test` – Führt alle Unit- und Integrationstests aus
+- `npm run test:e2e` – Führt Playwright E2E-Tests aus
+- Testberichte: Siehe `playwright-report/index.html` für E2E-Tests und `coverage/` für Code Coverage
+
+## 📝 Usage
+
+1. Install dependencies: `npm install`
+2. Entwicklung starten: `npm run dev`
+3. Produktion bauen: `npm run build`
+4. Server starten: `npm start`
+5. Tests ausführen: `npm run test` und `npm run test:e2e`
+6. Testberichte ansehen: Öffne `playwright-report/index.html` im Browser
+
+## 👥 Contributing
+
+Pull Requests und Issues sind willkommen! Bitte beachte die Sicherheitsrichtlinien in `SECURITY.md`.
 
 ## 🔗 Links
 
