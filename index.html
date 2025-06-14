@@ -50,7 +50,7 @@
                  script-src 'self' https://cdn.jsdelivr.net https://platform.twitter.com; 
                  style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; 
                  font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
-                 connect-src 'self' https://api.xrpl.org; 
+                 connect-src 'self' https://api.xrpl.org https://livenet.xrpl.org https://api.coingecko.com; 
                  frame-src 'self' https://platform.twitter.com; 
                  object-src 'none'; 
                  base-uri 'self'; 
@@ -855,11 +855,39 @@
                             </li>
                             <li><strong data-i18n="platform">Platform:</strong> XRP Ledger (XRPL)
                             </li>
+                            <li>
+                                <strong data-i18n="issuer_address">Issuer Address:</strong>
+                                <span
+                                    class="text-xs font-mono bg-gray-100 px-2 py-1 rounded">rJzQVveWEob6x6PJQqXm9sdcFjGbACBwv2</span>
+                            </li>
+                            <li>
+                                <strong data-i18n="explorer_links">Explorer Links:</strong>
+                                <div class="flex flex-wrap gap-2 mt-1">
+                                    <a href="https://livenet.xrpl.org/accounts/rJzQVveWEob6x6PJQqXm9sdcFjGbACBwv2"
+                                        target="_blank" rel="noopener noreferrer"
+                                        class="inline-flex items-center px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200 transition-colors">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor"
+                                            viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                        XRPL Explorer
+                                    </a>
+                                    <a href="https://bithomp.com/explorer/rJzQVveWEob6x6PJQqXm9sdcFjGbACBwv2"
+                                        target="_blank" rel="noopener noreferrer"
+                                        class="inline-flex items-center px-3 py-1 text-xs bg-green-100 text-green-700 rounded-full hover:bg-green-200 transition-colors">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor"
+                                            viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                        Bithomp
+                                    </a>
+                                </div>
+                            </li>
                         </ul>
-                        <p class="text-sm text-gray-500 mt-4" data-i18n="note_data_disclaimer">
-                            Note: Price data may vary. ATH/ATL values are based on corrected report
-                            data.
-                        </p>
                     </div>
                     <div class="section-card">
                         <h3 class="mb-6 text-center font-baloo-2" data-i18n="supply_overview_title">
@@ -985,6 +1013,41 @@
                     </figure>
                 </div>
             </section>
+            <section id="live-data" class="py-16 bg-white rounded-3xl shadow-xl mb-12">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl mb-4" data-i18n="live_data_title">
+                        Live-Preisdaten</h2>
+                    <p class="text-lg text-gray-700 max-w-xl mx-auto"
+                        data-i18n="live_data_description">Verfolge die aktuellen Preise von Burni
+                        Coin, XRP und XPM sowie AMM-Pool-Veränderungen.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="kpi-card">
+                        <div id="burniPrice" class="kpi-value">$0.0011</div>
+                        <div class="kpi-label" data-i18n="burni_price">Burni Coin Preis</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div id="xrpPrice" class="kpi-value">$0.50</div>
+                        <div class="kpi-label" data-i18n="xrp_price">XRP Preis</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div id="xpmPrice" class="kpi-value">$0.02</div>
+                        <div class="kpi-label" data-i18n="xpm_price">XPM Preis</div>
+                    </div>
+                </div>
+                <div class="flex justify-center mb-4">
+                    <button id="interval-day" class="pixar-button px-4 py-2 mx-2"
+                        data-i18n="interval_day">Tag</button>
+                    <button id="interval-week" class="pixar-button px-4 py-2 mx-2"
+                        data-i18n="interval_week">Woche</button>
+                    <button id="interval-month" class="pixar-button px-4 py-2 mx-2"
+                        data-i18n="interval_month">Monat</button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+            </section>
+            <!-- Tweets Section -->
             <section id="tweets" aria-labelledby="tweets-title-h2"
                 class="py-16 bg-white rounded-3xl shadow-xl mb-12">
                 <div class="text-center mb-12">
@@ -1235,8 +1298,8 @@
     <!-- Main application scripts -->
     <script src="/main.js" defer></script>
     <script src="/assets/scripts.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="main.js"></script>
+    <!-- Chart.js UMD bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.umd.min.js"></script>
     <script>
         // Alle Performance-Monitoring und Initialisierungen zusammenfassen
         (function () {
