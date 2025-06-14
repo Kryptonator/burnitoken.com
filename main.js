@@ -165,32 +165,26 @@ document.addEventListener('DOMContentLoaded', () => {
       displaySchedule = displaySchedule.concat(schedule.slice(-3));
     }
 
-    tableContainer.innerHTML = `
-            <table class="min-w-full bg-white">
-                <thead>
-                    <tr class="bg-orange-200 text-orange-800 uppercase text-sm leading-normal">
-                        <th class="py-3 px-6 text-left">${currentTranslations.date || 'Date'}</th>
-                        <th class="py-3 px-6 text-left">${currentTranslations.day || 'Day'}</th>
-                        <th class="py-3 px-6 text-left">${currentTranslations.process_no || 'Process No.'}</th>
-                        <th class="py-3 px-6 text-right">${currentTranslations.remaining_coins || 'Remaining Coins (approx.)'}</th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-700 text-sm font-light">
-                    ${displaySchedule
-                      .map(
-                        (row) => `
-                        <tr class="border-b border-gray-200 hover:bg-orange-50">
-                            <td class="py-3 px-6 text-left whitespace-nowrap">${row.date}</td>
-                            <td class="py-3 px-6 text-left">${row.day}</td>
-                            <td class="py-3 px-6 text-left">${row.process}</td>
-                            <td class="py-3 px-6 text-right">${row.coins}</td>
-                        </tr>
-                    `,
-                      )
-                      .join('')}
-                </tbody>
-            </table>
-        `;
+    // Sichere Tabellen-Erstellung ohne innerHTML
+    tableContainer.innerHTML = ''; // Leeren
+
+    const headers = [
+      currentTranslations.date || 'Date',
+      currentTranslations.day || 'Day',
+      currentTranslations.process_no || 'Process No.',
+      currentTranslations.remaining_coins || 'Remaining Coins (approx.)',
+    ];
+
+    const tableData = displaySchedule.map((item) => ({
+      date: item.date,
+      day: item.day,
+      process: item.process,
+      coins: item.coins,
+    }));
+
+    const secureTable = SecureDOM.createSecureTable(tableData, headers);
+    secureTable.className = 'min-w-full bg-white';
+    tableContainer.appendChild(secureTable);
   }
 
   async function fetchBurniMetrics() {
@@ -290,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (priceErrorMessageElement && translations[currentLang]) {
         const errorMsgKey =
           translations[currentLang].price_error_message || translations.en.price_error_message;
-        priceErrorMessageElement.innerHTML = errorMsgKey;
+        priceErrorMessageElement.textContent = errorMsgKey;
         priceErrorMessageElement.classList.remove('hidden');
       }
     }
