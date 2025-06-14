@@ -51,13 +51,13 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
     <link rel="manifest" href="/manifest.json" />
-    <!-- Content Security Policy -->
+    <!-- Content Security Policy - Verschärft -->
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; 
                  img-src 'self' data: https:; 
-                 script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://platform.twitter.com; 
-                 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; 
+                 script-src 'self' https://cdn.jsdelivr.net https://platform.twitter.com; 
+                 style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; 
                  font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
                  connect-src 'self' https://api.xrpl.org; 
                  frame-src 'self' https://platform.twitter.com; 
@@ -67,6 +67,8 @@
                  upgrade-insecure-requests;"
     />
     <link rel="stylesheet" href="/assets/css/styles.min.css" />
+    <link rel="stylesheet" href="/assets/css/critical.css" />
+    <script src="/assets/security.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Baloo+2:wght@700&amp;display=swap"
       rel="stylesheet"
@@ -810,8 +812,8 @@
                     <strong>Start of the first process:</strong> June 1, 2025 (Sunday)
                   </li>
                   <li data-i18n="key_insights_end_date">
-                    <strong>End date (after 260 processes, Coins &lt; 1):</strong> July 21, 2027
-                    (Wednesday)
+                    <strong>End date (after 260 processes, Coins &lt; 1):</strong>
+                    July 21, 2027 (Wednesday)
                   </li>
                   <li data-i18n="key_insights_total_processes">
                     <strong>Total Processes:</strong> 260
@@ -1559,6 +1561,34 @@
 
         // Removed duplicate year update code (handled in main.js)
       })();
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Burni Token",
+        "url": "https://burnitoken.com",
+        "description": "Deflationary cryptocurrency on XRPL. Innovative burning mechanism.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://burnitoken.com/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        "hasPart": [
+          {
+            "@type": "WebPage",
+            "name": "Use Cases",
+            "url": "https://burnitoken.com/#use-cases",
+            "about": [
+              { "@type": "Thing", "name": "Decentralized Gaming" },
+              { "@type": "Thing", "name": "NFT Integration" },
+              { "@type": "Thing", "name": "Reward Systems" },
+              { "@type": "Thing", "name": "Microtransactions" },
+              { "@type": "Thing", "name": "Community Governance" }
+            ]
+          }
+        ]
+      }
     </script>
   </body>
 </html>
